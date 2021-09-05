@@ -10,11 +10,14 @@ CHECKSTR="error"
 #### function ####
 
 function error_notify () {
-	python3 /opt/scripts/slack_notify/alert.py "$1"	
-	echo "$1"
+	mes="[`uname -n`] $1"
+	python3 /opt/scripts/slack_notify/alert.py "${mes}"	
+	echo "$mes"
 }
 
 #### main ####
+
+cd `dirname $0`
 
 exec 1> >(
   while read -r l; do echo "[$(date +"%Y-%m-%d %H:%M:%S")] $l"; done \
@@ -26,8 +29,6 @@ exec 2> >(
 )
 
 echo "[ INFO] log check start"
-
-cd `dirname $0`
 
 if [ ! -f ${LIST_FILE} ]; then
 #	monitor_list=`cat ${LIST_FILE}`
@@ -67,7 +68,9 @@ do
 		search_row=0
 	fi
 	error_mes=`tail -n +${search_row} ${file_path} | egrep -i "${CHECKSTR}"`
-	error_notify "$error_mes"
+	if [ -n "${error_mes}" ]; then
+		error_notify "$error_mes"
+	fi
 
 	echo "row=${row} old_row=${old_row}"
 	echo -e "${line}\t${row}" >> "${TMPFILE}2"
