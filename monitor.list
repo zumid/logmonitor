@@ -1,0 +1,7 @@
+# Log Monitor List
+/var/log/messages
+/opt/logmonitor/log/logmonitor_`date +%Y%m%d`.log
+/opt/scripts/postgres_backup/log/postgres_backup_`date +%Y%m%d`.log
+/opt/meshivision/log/night_batch.log
+/opt/meshivision/log/get_location.log
+/opt/meshivision/log/meshi_ranking.log
