@@ -1,0 +1,3 @@
+# Log Monitor List
+/opt/scripts/postgres_backup/log/postgres_backup_`date +%Y%m%d`.log
+/var/log/messages
