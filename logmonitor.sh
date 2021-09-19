@@ -11,7 +11,7 @@ CHECKSTR="error"
 
 function error_notify () {
 	mes="[`uname -n`] $1"
-	python3 /opt/scripts/slack_notify/alert.py "${mes}"	
+	python3 /opt/notify-api/slack_notify/alert.py "${mes}"	
 	echo "$mes"
 }
 
@@ -69,7 +69,7 @@ do
 	fi
 	error_mes=`tail -n +${search_row} ${file_path} | egrep -i "${CHECKSTR}"`
 	if [ -n "${error_mes}" ]; then
-		error_notify "$error_mes"
+		error_notify "LOGFILE=[$file_path] LOGMSG=[$error_mes]"
 	fi
 
 	echo "row=${row} old_row=${old_row}"
